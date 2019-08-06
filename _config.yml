@@ -94,6 +94,6 @@ live2d:
   display:
     position: left
     width: 180
-    height: 200
+    height: 230
   mobile:
     show: true
