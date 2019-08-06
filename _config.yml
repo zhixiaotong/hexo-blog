@@ -81,3 +81,19 @@ deploy:
   type: git
   repo: https://github.com/zhixiaotong/zhixiaotong.github.io.git
   branch: master
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: kesyoban
+  display:
+    position: left
+    width: 180
+    height: 200
+  mobile:
+    show: true
