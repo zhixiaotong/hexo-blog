@@ -4,6 +4,7 @@ date: 2019-07-31 15:20:50
 tags: ["其他"]
 category: "随笔"
 donate: false
+thumbnail: /gallery/thumbnails/bg.jpg
 ---
 
 撒花~属于我的博客小窝搭建完成！！！
