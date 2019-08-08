@@ -97,3 +97,5 @@ live2d:
     height: 230
   mobile:
     show: true
+aplayer:
+  meting: true
