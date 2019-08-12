@@ -9,5 +9,5 @@ donate: false
     杰伦是我偶像
 ### 联系我
     QQ：947803089
-    Email：947803089@qq.com
+    Email：zhixiaotong.me@qq.com
     Github：https://github.com/zhixiaotong
