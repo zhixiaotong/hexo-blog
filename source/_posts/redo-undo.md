@@ -57,7 +57,7 @@ const node = new Node(element); // 被插入链表的节点
          */
         push(element) {
             // 被插入链表的节点
-            var node = new Node(element);
+            const node = new Node(element);
             let current;
             if (this.length === 0) {
                 this.head = node;
@@ -105,6 +105,8 @@ const node = new Node(element); // 被插入链表的节点
             if (position < 0 || position >= this.length) {
                 throw new SyntaxError('插入元素下标越界')
             }
+            // 被插入链表的节点
+            const node = new Node(element);
             switch(index) {
                 case 0:
                     // 头部插入
