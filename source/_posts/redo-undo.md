@@ -49,6 +49,7 @@ class Stack() {
 const node = new Node(element); // 被插入链表的节点
 ```
 - **push**：将现有链表的tail尾指针指向**node**，同时前一个节点的next指针指向**node**。如果链表长度为0，说明没有节点被插入，直接将头结点和尾节点均指向**node**。
+
 ```javascript
     class Stack(maxLen) {
         ...
