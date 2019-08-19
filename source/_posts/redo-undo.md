@@ -51,41 +51,41 @@ const node = new Node(element); // 被插入链表的节点
 - **push**：将现有链表的tail尾指针指向**node**，同时前一个节点的next指针指向**node**。如果链表长度为0，说明没有节点被插入，直接将头结点和尾节点均指向**node**。
 
 ```javascript
-    class Stack(maxLen) {
-        ...
-        /**
-         * @param element 存储的数据
-         */
-        push(element) {
-            // 被插入链表的节点
-            const node = new Node(element);
-            let current;
-            if (this.length === 0) {
-                this.head = node;
-                this.tail = node;
-            } else {
-                current = this.head
-                // 循环，直至获取到当前链表的最后一个节点
-                while(current.next) {
-                    current = current.next
-                }
-                // 由于是双向链表，node的前置指针需要指向current，current的后继指针需要指向node
-                current.next = node
-                node.prev = current
-                // node自然是tail尾节点
-                this.tail = node
+class Stack(maxLen) {
+    ...
+    /**
+        * @param element 存储的数据
+        */
+    push(element) {
+        // 被插入链表的节点
+        const node = new Node(element);
+        let current;
+        if (this.length === 0) {
+            this.head = node;
+            this.tail = node;
+        } else {
+            current = this.head
+            // 循环，直至获取到当前链表的最后一个节点
+            while(current.next) {
+                current = current.next
             }
-            // 链表长度累加
-            this.length++
-            // 如果声明了maxLen，当length超出了maxLen，需要从链表头部开始截取第一个节点
-            // if (this.length - 1 === this.maxLen) {
-                // this.removeNode(0);
-            // }
-            // 指针变动
-            this.finger = this.length - 1;
+            // 由于是双向链表，node的前置指针需要指向current，current的后继指针需要指向node
+            current.next = node
+            node.prev = current
+            // node自然是tail尾节点
+            this.tail = node
         }
-        ...
+        // 链表长度累加
+        this.length++
+        // 如果声明了maxLen，当length超出了maxLen，需要从链表头部开始截取第一个节点
+        // if (this.length - 1 === this.maxLen) {
+            // this.removeNode(0);
+        // }
+        // 指针变动
+        this.finger = this.length - 1;
     }
+    ...
+}
 ```
 - **insert**：
 插入需要指定元素被插入的**下标**，分为**头部插入**，**中间插入**和**尾部插入**三种情况，不管是哪种插入，在前进撤销操作中，被插入的node都将作为tail节点，并删除下标对应节点后续的其他节点。
@@ -95,79 +95,79 @@ const node = new Node(element); // 被插入链表的节点
 
 以下是部分代码：
 ```javascript
-    class Stack(maxLen) {
-        ...
-        /**
-         * @param index 待插入的下标
-         * @param element 存储的数据
-         */
-        insert(index, element) {
-            // 防止越界
-            if (position < 0 || position >= this.length) {
-                throw new SyntaxError('插入元素下标越界')
+class Stack(maxLen) {
+    ...
+    /**
+        * @param index 待插入的下标
+        * @param element 存储的数据
+        */
+    insert(index, element) {
+        // 防止越界
+        if (position < 0 || position >= this.length) {
+            throw new SyntaxError('插入元素下标越界')
+        }
+        // 被插入链表的节点
+        const node = new Node(element);
+        switch(index) {
+            case 0:
+                // 头部插入
+                node.next = null;
+                this.head = node;
+                this.length = 1;
+                break;
+            case this.length:
+                // 尾部插入
+                var tail = this.tail;
+                tail.next = node;
+                node.prev = tail;
+                // 累加长度
+                this.length++;
+                // 超出截取
+                // if (this.length - 1 === this.maxLen) {
+                    // this.removeNode(0);
+                // }
+                break;
+            default:
+                // 中间插入
+                var idx = 0;
+                var previous;
+                var current = this.head;
+                while (idx < index) {
+                    idx++;
+                    previous = current;
+                    current = current.next;
+                }
+                // 添加节点之间的关联
+                previous.next = node;
+                current.prev = node;
+                node.prev = previous;
+                this.length = idx;
+                break;
             }
-            // 被插入链表的节点
-            const node = new Node(element);
-            switch(index) {
-                case 0:
-                    // 头部插入
-                    node.next = null;
-                    this.head = node;
-                    this.length = 1;
-                    break;
-                case this.length:
-                    // 尾部插入
-                    var tail = this.tail;
-                    tail.next = node;
-                    node.prev = tail;
-                    // 累加长度
-                    this.length++;
-                    // 超出截取
-                    // if (this.length - 1 === this.maxLen) {
-                        // this.removeNode(0);
-                    // }
-                    break;
-                default:
-                    // 中间插入
-                    var idx = 0;
-                    var previous;
-                    var current = this.head;
-                    while (idx < index) {
-                      idx++;
-                      previous = current;
-                      current = current.next;
-                    }
-                    // 添加节点之间的关联
-                    previous.next = node;
-                    current.prev = node;
-                    node.prev = previous;
-                    this.length = idx;
-                    break;
-              }
-              // 不管是什么操作，tail节点都是node
-              this.tail = node;
-              // 指针变动
-              this.finger = this.length -1;
-          }
-          ...
-    }
+            // 不管是什么操作，tail节点都是node
+            this.tail = node;
+            // 指针变动
+            this.finger = this.length -1;
+        }
+        ...
+}
 ```
 ### 删除
 删除同修改一样，与修改不同的是，将tail置为null，如果删除下标为0，则清空链表。
 ### 清空
 链表的清空操作很简单，只需要重置头尾节点，指针清零即可，javascript内存机制中垃圾回收机制会自动回收不再使用的数据内存，这使得我们不需要手动释放内存。
 ```javascript
-    class Stack(maxLen) {
-        ...
-        // 清空
-        empty() {
-            this.head = null; // 重置头指针
-            this.tail = null; // 重置尾指针
-            this.length = 0; // 重置长度
-            this.finger = 0; // 重置指针变动
-        }
-        ...
+class Stack(maxLen) {
+    ...
+    // 清空
+    empty() {
+        this.head = null; // 重置头指针
+        this.tail = null; // 重置尾指针
+        this.length = 0; // 重置长度
+        this.finger = 0; // 重置指针变动
     }
+    ...
+}
 ```
 
 > 前进撤销的基本思路是点击按钮切换Stack的finger指针下标，根据下标获取对应的Node节点，将节点中的数据返回到页面上重新渲染。
