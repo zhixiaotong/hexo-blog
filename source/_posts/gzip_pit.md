@@ -3,7 +3,7 @@ title: 使用gzip优化页面加载遇到的问题
 date: 2021-01-21 15:35:06
 tags: ["Javascript"]
 category: "那些年我走过的坑"
-thumbnail: /gallery/thumbnails/lianbiao.jpg
+thumbnail: /gallery/thumbnails/what-is-gzip.jpg
 copyright: true
 ---
 ![u=1180411375,4109830813&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-b0bfbc54bb9744b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
