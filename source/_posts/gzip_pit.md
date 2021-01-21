@@ -6,9 +6,8 @@ category: "那些年我走过的坑"
 thumbnail: /gallery/thumbnails/what-is-gzip.jpg
 copyright: true
 ---
-<div style="text-align:center;">
-  <img src="https://upload-images.jianshu.io/upload_images/17756630-b0bfbc54bb9744b1.jpg" align="middle" />
-</div>
+![u=1180411375,4109830813&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-b0bfbc54bb9744b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ## 背景
 
 我司目前项目已经经过了很多次优化了，期间通过webpack打包实践了很多种方式，包括样式文件通过[**gulp**](https://www.gulpjs.com.cn/)实现命令行级别输出到static目录下，避免了此类css的打包，通过[**equire**](https://www.npmjs.com/package/babel-plugin-equire)插件实现了echarts的按需引入，换掉了momentjs替换成了轻量的dayjs，还有一些比较细的优化，在此就不一一列举了。
@@ -160,9 +159,7 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 ```
 
 显示语法ok了，测试也通过了，说明正常启动了吧？打开浏览器，又查看了一遍资源加载......
-<div style="text-align:center;">
-<img src="https://upload-images.jianshu.io/upload_images/17756630-d6da038cc0397716.gif" align="middle" />
-</div>
+![423.gif](https://upload-images.jianshu.io/upload_images/17756630-d6da038cc0397716.gif?imageMogr2/auto-orient/strip)
 
 ##### 回答二
 
@@ -190,15 +187,11 @@ nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)
 nginx: [alert] kill(20468, 1) failed (3: No such process)
 ```
 
-<div style="text-align:center;">
-<img src="https://upload-images.jianshu.io/upload_images/17756630-224138efbac497cf.jpg" align="middle" />
-</div>
+![u=1023318312,4042958451&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-224138efbac497cf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 杀掉了主进程，却没有启动成功！
 吓得我一个激灵看了一下页面，咦？
 正常情况下，刷新页面，页面会由于nginx进程被`kill`导致页面无法访问。但是，页面依然能正常打开，俺不信邪，又试了好几个页面，果不其然都行。（不知道是该开心，还是该难过？）
-<div style="text-align:center;">
-  <img src="https://upload-images.jianshu.io/upload_images/17756630-f24f954987126828.jpg" align="middle" />
-</div>
+![u=3318123593,1248177504&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-f24f954987126828.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 nginx进程都没了，为啥还能访问页面？我又又问百度了，经过多方查探，发现有回答说是可能因为程序占用了端口导致`kill`不掉。在命令行键入以下命令：
 
 ```shell
@@ -211,9 +204,7 @@ netstat -ntlp
 果不其然，的确有这个进程，再次通过`kill`命令删除PID进程号，再次执行之前命令，发现列表中nginx进程不复存在了。点此查看[彻底删除nginx进程](https://blog.csdn.net/nil_lu/article/details/82682385)
 
 此时，我们刷新浏览器页面，地址访问不了了，确定nginx已经被彻底删除，此时执行[nginx重启命令](https://www.cnblogs.com/codingcloud/p/5095066.html)，测试`gzip_static`测试是否成功应用。不出意外，nginx应用gzip应该是成功了。此时，你应该能成功看到**Request Headers**中的`Content-Encoding: gzip`了，明显能感到页面加载的速度变快了。
-<div style="text-align:center;">
-  <img src="https://upload-images.jianshu.io/upload_images/17756630-c0b76c1cc07d9518.gif" />
-</div>
+![a421444a20a44623299aa10c8f22720e0cf3d70b.gif](https://upload-images.jianshu.io/upload_images/17756630-c0b76c1cc07d9518.gif?imageMogr2/auto-orient/strip)
 如果你经过最开始的安装`gzip_static`后没有出现后续问题，那么恭喜你没有栽坑里[狗头]。如果栽了跟头也没关系，毕竟百度大法好啊（虽然google更香...）
 
 这次记录就到这了，希望对你能有帮助~Skr
