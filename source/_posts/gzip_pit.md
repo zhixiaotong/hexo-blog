@@ -10,6 +10,7 @@ copyright: true
 
 ## 背景
 我司目前项目已经经过了很多次优化了，期间通过webpack打包实践了很多种方式，包括样式文件通过[**gulp**](https://www.gulpjs.com.cn/)实现命令行级别输出到static目录下，避免了此类css的打包，通过[**equire**](https://www.npmjs.com/package/babel-plugin-equire)插件实现了echarts的按需引入，换掉了momentjs替换成了轻量的dayjs，还有一些比较细的优化，在此就不一一列举了。
+<!-- more -->
 
 但是由于多页面配置，每个页面的js都挺大的，导致进入页面不是很流畅。期间曾经尝试了gzip，栽坑里了，由于需求原因又搁置了，近期手头工作比较少，又开始了踩坑的路途。
 
