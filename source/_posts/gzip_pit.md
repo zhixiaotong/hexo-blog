@@ -188,23 +188,28 @@ nginx: [alert] kill(20468, 1) failed (3: No such process)
 ```
 
 ![u=1023318312,4042958451&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-224138efbac497cf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 杀掉了主进程，却没有启动成功！
 吓得我一个激灵看了一下页面，咦？
 正常情况下，刷新页面，页面会由于nginx进程被`kill`导致页面无法访问。但是，页面依然能正常打开，俺不信邪，又试了好几个页面，果不其然都行。（不知道是该开心，还是该难过？）
 ![u=3318123593,1248177504&fm=26&gp=0.jpg](https://upload-images.jianshu.io/upload_images/17756630-f24f954987126828.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-nginx进程都没了，为啥还能访问页面？我又又问百度了，经过多方查探，发现有回答说是可能因为程序占用了端口导致`kill`不掉。在命令行键入以下命令：
+nginx进程都没了，为啥还能访问页面？我又经过多方查探，发现有回答说是可能因为程序占用了端口导致`kill`不掉。在命令行键入以下命令：
 
 ```shell
-// 或者netstat -ntlp | grep 80
+// 根据端口号将进程列举出来
 netstat -ntlp
+// 或者：指定80端口
+// netstat -ntlp | grep 80
+// 或者：查看那些程序使用tcp的80端口
+// fuser -n tcp 80
 ```
 
-查看到进程列表，或者通过`fuser -n tcp 80`查看里面是否**nginx**的占用？
+查看进程列表中是否**nginx**的占用？
 
 果不其然，的确有这个进程，再次通过`kill`命令删除PID进程号，再次执行之前命令，发现列表中nginx进程不复存在了。点此查看[彻底删除nginx进程](https://blog.csdn.net/nil_lu/article/details/82682385)
 
 此时，我们刷新浏览器页面，地址访问不了了，确定nginx已经被彻底删除，此时执行[nginx重启命令](https://www.cnblogs.com/codingcloud/p/5095066.html)，测试`gzip_static`测试是否成功应用。不出意外，nginx应用gzip应该是成功了。此时，你应该能成功看到**Request Headers**中的`Content-Encoding: gzip`了，明显能感到页面加载的速度变快了。
 ![a421444a20a44623299aa10c8f22720e0cf3d70b.gif](https://upload-images.jianshu.io/upload_images/17756630-c0b76c1cc07d9518.gif?imageMogr2/auto-orient/strip)
-如果你经过最开始的安装`gzip_static`后没有出现后续问题，那么恭喜你没有栽坑里[狗头]。如果栽了跟头也没关系，毕竟百度大法好啊（虽然google更香...）
+如果你经过最开始的安装`gzip_static`后没有出现后续问题，那么恭喜你没有栽坑里[狗头]。如果栽了跟头，希望这篇文章也能帮助到你~
 
 这次记录就到这了，希望对你能有帮助~Skr
